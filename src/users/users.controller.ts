@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+import fs from 'fs';
 import {
   Controller,
   Get,
@@ -6,11 +8,12 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import { Request } from 'express';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -21,7 +24,19 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Req() req: Request) {
+    const PUBLIC_KEY = fs.readFileSync('../keys/PUBLIC_KEY.key');
+    const { authorization } = req.headers;
+    try {
+      const token = authorization.replace('Bearer ', '');
+      jwt.verify(token, PUBLIC_KEY);
+    } catch (err) {
+      return {
+        code: 500,
+        message: 'Invalid token',
+        data: null,
+      };
+    }
     return this.usersService.findAll();
   }
 

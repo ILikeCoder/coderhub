@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import crypto from 'crypto';
+import { md5Password } from '../utils/md5';
 @Injectable()
 export class UsersService {
   constructor(
@@ -28,10 +28,10 @@ export class UsersService {
         data: null,
       };
     }
-    const md5 = crypto.createHash('md5');
+
     await this.userService.save({
       ...createUserDto,
-      password: md5.update(password).digest('hex'),
+      password: md5Password(password),
     });
     const findUser = await this.findOne(name);
     return {
