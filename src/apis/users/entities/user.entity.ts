@@ -11,6 +11,9 @@ export class User {
   @Column({ length: 50 })
   password: string;
 
+  @Column({ length: 100 })
+  avatar_url: string;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
 

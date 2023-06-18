@@ -1,9 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LoginModule } from './login/login.module';
-import { UsersModule } from './users/users.module';
+import { LoginModule } from './apis/login/login.module';
+import { UsersModule } from './apis/users/users.module';
+import { MomentModule } from './apis/moment/moment.module';
+import { CommentModule } from './apis/comment/comment.module';
+import { LabelModule } from './apis/label/label.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { FileModule } from './apis/file/file.module';
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './uploads', // 上传文件的存储路径
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '119.23.233.156',
@@ -18,6 +26,10 @@ import { UsersModule } from './users/users.module';
     }),
     LoginModule,
     UsersModule,
+    MomentModule,
+    CommentModule,
+    LabelModule,
+    FileModule,
   ],
 })
 export class AppModule {}

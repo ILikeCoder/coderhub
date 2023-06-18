@@ -4,12 +4,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { md5Password } from '../utils/md5';
+import { md5Password } from '../../utils/md5';
+import fs from 'fs';
+import path from 'path';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userService: Repository<User>,
+    private readonly usersRepository: Repository<User>,
   ) {}
   async create(createUserDto: CreateUserDto) {
     const { name, password } = createUserDto;
@@ -29,7 +31,7 @@ export class UsersService {
       };
     }
 
-    await this.userService.save({
+    await this.usersRepository.save({
       ...createUserDto,
       password: md5Password(password),
     });
@@ -42,11 +44,11 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userService.find();
+    return this.usersRepository.find();
   }
 
   findOne(name: string) {
-    return this.userService.findOne({
+    return this.usersRepository.findOne({
       where: {
         name,
       },
@@ -59,5 +61,11 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async showAvatarImage(userId) {
+    const statements = 'SELECT * FROM avatar WHERE userId = ? ';
+    const result = await this.usersRepository.query(statements, [userId]);
+    return result.pop();
   }
 }
