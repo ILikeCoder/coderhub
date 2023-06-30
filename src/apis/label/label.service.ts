@@ -10,16 +10,26 @@ export class LabelService {
     @InjectRepository(Label)
     private readonly labelRepository: Repository<Label>,
   ) {}
-  create(createLabelDto: CreateLabelDto) {
-    return this.labelRepository.save(createLabelDto);
+  async create(createLabelDto: CreateLabelDto) {
+    const label = await this.findOne(createLabelDto.name);
+    if (!label) return this.labelRepository.save(createLabelDto);
+    return {
+      code: 500,
+      message: '标签已存在',
+      id: label.id,
+    };
   }
 
   findAll() {
     return `This action returns all label`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} label`;
+  findOne(name: string) {
+    return this.labelRepository.findOne({
+      where: {
+        name,
+      },
+    });
   }
 
   update(id: number, updateLabelDto: UpdateLabelDto) {

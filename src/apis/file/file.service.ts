@@ -13,7 +13,7 @@ export class FileService {
     private readonly fileRepository: Repository<Avatar>,
   ) {}
   async create({ mimetype, size, buffer }, user) {
-    const uploadsPath = path.resolve(__dirname, '../../../src/uploads');
+    const uploadsPath = path.resolve(__dirname, '../../uploads');
     const filename = uuidv4();
     const writeImage = createWriteStream(`${uploadsPath}/${filename}`);
     writeImage.write(buffer);

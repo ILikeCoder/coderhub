@@ -33,10 +33,7 @@ export class LoginService {
         data: null,
       };
     }
-    const pathName = path.resolve(
-      __dirname,
-      '../../../src/keys/PRIVATE_KEY.pem',
-    );
+    const pathName = path.resolve(__dirname, '../../keys/PRIVATE_KEY.pem');
     const private_key = fs.readFileSync(pathName);
     const token = jwt.sign({ id: user.id, name }, private_key, {
       expiresIn: 24 * 60 * 60,

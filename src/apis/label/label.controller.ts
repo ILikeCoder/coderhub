@@ -25,9 +25,9 @@ export class LabelController {
     return this.labelService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.labelService.findOne(+id);
+  @Get(':name')
+  findOne(@Param('name') name: string) {
+    return this.labelService.findOne(name);
   }
 
   @Patch(':id')

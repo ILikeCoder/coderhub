@@ -20,12 +20,15 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.2",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^7.0.12",
     "@nestjs/typeorm": "^9.0.1",
+    "@types/hapi__joi": "^17.1.9",
     "@types/jsonwebtoken": "^9.0.2",
     "dotenv": "^16.1.3",
     "jsonwebtoken": "^9.0.0",

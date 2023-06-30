@@ -20,7 +20,7 @@ export class VerifyAuth implements CanActivate {
     // 如果需要跳过 token 验证，则直接返回 true
     if (skipAuth) return true;
     const req = context.switchToHttp().getRequest();
-    const pathName = path.resolve(__dirname, '../../src/keys/PUBLIC_KEY.pem');
+    const pathName = path.resolve(__dirname, '../keys/PUBLIC_KEY.pem');
     const PUBLIC_KEY = fs.readFileSync(pathName);
     const { authorization } = req.headers;
     try {

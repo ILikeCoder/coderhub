@@ -11,7 +11,7 @@ export class User {
   @Column({ length: 50 })
   password: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 100, nullable: true })
   avatar_url: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

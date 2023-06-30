@@ -42,9 +42,13 @@ export class CommentService {
     return `This action updates a #${id} comment`;
   }
 
-  remove(id: number) {
-    return this.commentRepository.query(`DELETE FROM comment WHERE id = ?`, [
+  async remove(id: number) {
+    await this.commentRepository.query(`DELETE FROM comment WHERE id = ?`, [
       id,
     ]);
+    return {
+      code: 200,
+      message: '删除评论成功',
+    };
   }
 }

@@ -23,7 +23,7 @@ export class MomentService {
     await this.momentRepository.save(createMomentDto);
     return {
       code: 200,
-      message: '发布评论成功',
+      message: '发布动态成功',
     };
   }
 

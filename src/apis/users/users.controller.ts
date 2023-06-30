@@ -48,7 +48,7 @@ export class UsersController {
   @SkipAuth()
   async getAvatar(@Param('userId') userId: string, @Res() res: Response) {
     const { filename } = await this.usersService.showAvatarImage(userId);
-    const uploadsPath = path.resolve(__dirname, '../../../src/uploads');
+    const uploadsPath = path.resolve(__dirname, '../../uploads');
     const readImage = fs.createReadStream(`${uploadsPath}/${filename}`);
     readImage.pipe(res);
   }
